@@ -30,3 +30,11 @@
 
 # Debug files
 *.dSYM/
+
+# Other
+*.dep/
+*.lst
+*.eep
+*.map
+*.lss
+*.sym
