@@ -113,38 +113,38 @@ static const uint8_t PROGMEM device_descriptor[] = {
 
 // Keyboard Protocol 1, HID 1.11 spec, Appendix B, page 59-60
 static const uint8_t PROGMEM keyboard_hid_report_desc[] = {
-        0x05, 0x01,          // Usage Page (Generic Desktop),
-        0x09, 0x06,          // Usage (Keyboard),
-        0xA1, 0x01,          // Collection (Application),
-        0x75, 0x01,          //   Report Size (1),
-        0x95, 0x08,          //   Report Count (8),
-        0x05, 0x07,          //   Usage Page (Key Codes),
-        0x19, 0xE0,          //   Usage Minimum (224),
-        0x29, 0xE7,          //   Usage Maximum (231),
-        0x15, 0x00,          //   Logical Minimum (0),
-        0x25, 0x01,          //   Logical Maximum (1),
-        0x81, 0x02,          //   Input (Data, Variable, Absolute), ;Modifier byte
-        0x95, 0x01,          //   Report Count (1),
-        0x75, 0x08,          //   Report Size (8),
-        0x81, 0x03,          //   Input (Constant),                 ;Reserved byte
-        0x95, 0x05,          //   Report Count (5),
-        0x75, 0x01,          //   Report Size (1),
-        0x05, 0x08,          //   Usage Page (LEDs),
-        0x19, 0x01,          //   Usage Minimum (1),
-        0x29, 0x05,          //   Usage Maximum (5),
-        0x91, 0x02,          //   Output (Data, Variable, Absolute), ;LED report
-        0x95, 0x01,          //   Report Count (1),
-        0x75, 0x03,          //   Report Size (3),
-        0x91, 0x03,          //   Output (Constant),                 ;LED report padding
-        0x95, 0x06,          //   Report Count (6),
-        0x75, 0x08,          //   Report Size (8),
-        0x15, 0x00,          //   Logical Minimum (0),
-        0x25, 0xdf,          //   Logical Maximum(223),
-        0x05, 0x07,          //   Usage Page (Key Codes),
-        0x19, 0x00,          //   Usage Minimum (0),
-        0x29, 0xdf,          //   Usage Maximum (223),
-        0x81, 0x00,          //   Input (Data, Array),
-        0xc0                 // End Collection
+	0x05, 0x01,	// Usage Page (Generic Desktop),
+	0x09, 0x06,	// Usage (Keyboard),
+	0xA1, 0x01,	// Collection (Application),
+	0x75, 0x01,	//   Report Size (1),
+	0x95, 0x08,	//   Report Count (8),
+	0x05, 0x07,	//   Usage Page (Key Codes),
+	0x19, 0xE0,	//   Usage Minimum (224),
+	0x29, 0xE7,	//   Usage Maximum (231),
+	0x15, 0x00,	//   Logical Minimum (0),
+	0x25, 0x01,	//   Logical Maximum (1),
+	0x81, 0x02,	//   Input (Data, Variable, Absolute),	;Modifier byte
+	0x95, 0x01,	//   Report Count (1),
+	0x75, 0x08,	//   Report Size (8),
+	0x81, 0x03,	//   Input (Constant),			;Reserved byte
+	0x95, 0x05,	//   Report Count (5),
+	0x75, 0x01,	//   Report Size (1),
+	0x05, 0x08,	//   Usage Page (LEDs),
+	0x19, 0x01,	//   Usage Minimum (1),
+	0x29, 0x05,	//   Usage Maximum (5),
+	0x91, 0x02,	//   Output (Data, Variable, Absolute),	;LED report
+	0x95, 0x01,	//   Report Count (1),
+	0x75, 0x03,	//   Report Size (3),
+	0x91, 0x03,	//   Output (Constant),			;LED report padding
+	0x95, 0x06,	//   Report Count (6),
+	0x75, 0x08,	//   Report Size (8),
+	0x15, 0x00,	//   Logical Minimum (0),
+	0x25, 0xdf,	//   Logical Maximum(223),
+	0x05, 0x07,	//   Usage Page (Key Codes),
+	0x19, 0x00,	//   Usage Minimum (0),
+	0x29, 0xdf,	//   Usage Maximum (223),
+	0x81, 0x00,	//   Input (Data, Array),
+	0xc0		// End Collection
 };
 
 static const uint8_t PROGMEM debug_hid_report_desc[] = {
@@ -160,9 +160,9 @@ static const uint8_t PROGMEM debug_hid_report_desc[] = {
 	0xC0					// end collection
 };
 
-#define CONFIG1_DESC_SIZE        (9+9+9+7+9+9+7)
-#define KEYBOARD_HID_DESC_OFFSET (9+9)
-#define DEBUG_HID_DESC_OFFSET    (9+9+9+7+9)
+#define CONFIG1_DESC_SIZE		(9+9+9+7+9+9+7)
+#define KEYBOARD_HID_DESC_OFFSET	(9+9)
+#define DEBUG_HID_DESC_OFFSET		(9+9+9+7+9)
 static const uint8_t PROGMEM config1_descriptor[CONFIG1_DESC_SIZE] = {
 	// configuration descriptor, USB spec 9.6.3, page 264-266, Table 9-10
 	9,					// bLength;
@@ -323,11 +323,11 @@ void usb_init(void)
 	HW_CONFIG();
 	USB_FREEZE();				// enable USB
 	PLL_CONFIG();				// config PLL
-        while (!(PLLCSR & (1<<PLOCK))) ;	// wait for PLL lock
-        USB_CONFIG();				// start USB clock
-        UDCON = 0;				// enable attach resistor
+	while (!(PLLCSR & (1<<PLOCK))) ;	// wait for PLL lock
+	USB_CONFIG();				// start USB clock
+	UDCON = 0;				// enable attach resistor
 	usb_configuration = 0;
-        UDIEN = (1<<EORSTE)|(1<<SOFE);
+	UDIEN = (1<<EORSTE)|(1<<SOFE);
 	sei();
 }
 
@@ -477,16 +477,16 @@ ISR(USB_GEN_vect)
 	uint8_t intbits, t, i;
 	static uint8_t div4=0;
 
-        intbits = UDINT;
-        UDINT = 0;
-        if (intbits & (1<<EORSTI)) {
+	intbits = UDINT;
+	UDINT = 0;
+	if (intbits & (1<<EORSTI)) {
 		UENUM = 0;
 		UECONX = 1;
 		UECFG0X = EP_TYPE_CONTROL;
 		UECFG1X = EP_SIZE(ENDPOINT0_SIZE) | EP_SINGLE_BUFFER;
 		UEIENX = (1<<RXSTPE);
 		usb_configuration = 0;
-        }
+	}
 	if ((intbits & (1<<SOFI)) && usb_configuration) {
 		t = debug_flush_timer;
 		if (t) {
@@ -545,9 +545,9 @@ static inline void usb_ack_out(void)
 //
 ISR(USB_COM_vect)
 {
-        uint8_t intbits;
+	uint8_t intbits;
 	const uint8_t *list;
-        const uint8_t *cfg;
+	const uint8_t *cfg;
 	uint8_t i, n, len, en;
 	uint8_t bmRequestType;
 	uint8_t bRequest;
@@ -558,19 +558,19 @@ ISR(USB_COM_vect)
 	const uint8_t *desc_addr;
 	uint8_t	desc_length;
 
-        UENUM = 0;
+	UENUM = 0;
 	intbits = UEINTX;
-        if (intbits & (1<<RXSTPI)) {
-                bmRequestType = UEDATX;
-                bRequest = UEDATX;
-                wValue = UEDATX;
-                wValue |= (UEDATX << 8);
-                wIndex = UEDATX;
-                wIndex |= (UEDATX << 8);
-                wLength = UEDATX;
-                wLength |= (UEDATX << 8);
-                UEINTX = ~((1<<RXSTPI) | (1<<RXOUTI) | (1<<TXINI));
-                if (bRequest == GET_DESCRIPTOR) {
+	if (intbits & (1<<RXSTPI)) {
+		bmRequestType = UEDATX;
+		bRequest = UEDATX;
+		wValue = UEDATX;
+		wValue |= (UEDATX << 8);
+		wIndex = UEDATX;
+		wIndex |= (UEDATX << 8);
+		wLength = UEDATX;
+		wLength |= (UEDATX << 8);
+		UEINTX = ~((1<<RXSTPI) | (1<<RXOUTI) | (1<<TXINI));
+		if (bRequest == GET_DESCRIPTOR) {
 			list = (const uint8_t *)descriptor_list;
 			for (i=0; ; i++) {
 				if (i >= NUM_DESC_LIST) {
@@ -611,7 +611,7 @@ ISR(USB_COM_vect)
 				usb_send_in();
 			} while (len || n == ENDPOINT0_SIZE);
 			return;
-                }
+		}
 		if (bRequest == SET_ADDRESS) {
 			usb_send_in();
 			usb_wait_in_ready();
@@ -659,7 +659,7 @@ ISR(USB_COM_vect)
 		}
 		#ifdef SUPPORT_ENDPOINT_HALT
 		if ((bRequest == CLEAR_FEATURE || bRequest == SET_FEATURE)
-		  && bmRequestType == 0x02 && wValue == 0) {
+		    && bmRequestType == 0x02 && wValue == 0) {
 			i = wIndex & 0x7F;
 			if (i >= 1 && i <= MAX_ENDPOINT) {
 				usb_send_in();
