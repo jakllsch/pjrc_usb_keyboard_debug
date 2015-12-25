@@ -645,19 +645,19 @@ ISR(USB_COM_vect)
 		if (bRequest == GET_STATUS) {
 			usb_wait_in_ready();
 			i = 0;
-			#ifdef SUPPORT_ENDPOINT_HALT
+#ifdef SUPPORT_ENDPOINT_HALT
 			if (bmRequestType == 0x82) {
 				UENUM = wIndex;
 				if (UECONX & (1<<STALLRQ)) i = 1;
 				UENUM = 0;
 			}
-			#endif
+#endif
 			UEDATX = i;
 			UEDATX = 0;
 			usb_send_in();
 			return;
 		}
-		#ifdef SUPPORT_ENDPOINT_HALT
+#ifdef SUPPORT_ENDPOINT_HALT
 		if ((bRequest == CLEAR_FEATURE || bRequest == SET_FEATURE)
 		    && bmRequestType == 0x02 && wValue == 0) {
 			i = wIndex & 0x7F;
@@ -674,7 +674,7 @@ ISR(USB_COM_vect)
 				return;
 			}
 		}
-		#endif
+#endif
 		if (wIndex == KEYBOARD_INTERFACE) {
 			if (bmRequestType == 0xA1) {
 				if (bRequest == HID_GET_REPORT) {
